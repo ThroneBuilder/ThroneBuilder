@@ -32,5 +32,7 @@
 ## Notes
 
 - Spec is ready for `/speckit-plan`. No clarifications required.
+- Content storage changed from Sanity.io to Markdown files in GitHub (Astro Content
+  Collections). Sanity project directory removed from repository.
 - Substack content migration is explicitly deferred to a future feature (see Assumptions).
 - Design/brand system is deferred; layout defaults will be iterated in a later feature.

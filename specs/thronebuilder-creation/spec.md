@@ -10,7 +10,7 @@
 1. GitHub as the source of truth.
 2. Astro as the site framework
 3. SEO via RSS + sitemap + OpenGraph
-4. Content managed on just created ThroneBuilder project on sanity.io
+4. Content stored directly in GitHub (Markdown files)
 5. Video on existing ThroneBuilder YouTube channel.
 6. Render for deployment."
 
@@ -18,21 +18,23 @@
 
 ### User Story 1 - Browse and Read Content (Priority: P1)
 
-A visitor arrives at ThroneBuilder.com and can read the latest posts and articles
-pulled from Sanity.io. They see a clean homepage with a list of recent content,
-click an article, and read it in full. The experience works with JavaScript disabled.
+A visitor arrives at ThroneBuilder.com and can read the latest posts and articles.
+Content is authored as Markdown files committed to the GitHub repository. They see a
+clean homepage with a list of recent content, click an article, and read it in full.
+The experience works with JavaScript disabled.
 
 **Why this priority**: Core value of the site is content delivery. Everything else
 builds on top of this working correctly.
 
-**Independent Test**: Deploy the Astro site with at least one piece of content in
-Sanity.io. Confirm the homepage lists it and the article page renders it fully.
-Verify the page renders with JS disabled in the browser.
+**Independent Test**: Add at least one Markdown article to the repository. Deploy
+the site and confirm the homepage lists the article and the article page renders
+the full content. Verify the page renders with JS disabled in the browser.
 
 **Acceptance Scenarios**:
 
-1. **Given** a published article exists in Sanity.io, **When** a visitor opens the
-   homepage, **Then** the article title and excerpt appear in the content list.
+1. **Given** a Markdown article file is committed to the repository, **When** a
+   visitor opens the homepage, **Then** the article title and excerpt appear in
+   the content list.
 2. **Given** a visitor clicks an article title, **When** the article page loads,
    **Then** the full article body, title, and publish date are displayed.
 3. **Given** a visitor has JavaScript disabled, **When** they load the homepage or
@@ -43,19 +45,20 @@ Verify the page renders with JS disabled in the browser.
 ### User Story 2 - Watch Embedded Videos (Priority: P2)
 
 A visitor navigates to a content page that includes a video and can watch it
-directly on the site via an embedded YouTube player. The video is linked from the
-ThroneBuilder YouTube channel and managed through Sanity.io.
+directly on the site via an embedded YouTube player. The YouTube video URL is
+specified in the article's Markdown frontmatter, linking to the ThroneBuilder
+YouTube channel.
 
 **Why this priority**: Video is a primary content format for ThroneBuilder. Embedding
 YouTube keeps hosting costs zero while surfacing that content on the owned domain.
 
-**Independent Test**: Add a content item in Sanity.io with a YouTube video reference.
+**Independent Test**: Add a Markdown article with a `youtube_url` frontmatter field.
 Confirm the video embeds and plays on the corresponding page without leaving the site.
 
 **Acceptance Scenarios**:
 
-1. **Given** a content item in Sanity.io has a YouTube video URL, **When** a visitor
-   opens that page, **Then** an embedded video player is visible and playable.
+1. **Given** an article's frontmatter includes a YouTube video URL, **When** a
+   visitor opens that page, **Then** an embedded video player is visible and playable.
 2. **Given** a visitor plays the video, **When** playback starts, **Then** the video
    plays without redirecting away from ThroneBuilder.com.
 
@@ -92,54 +95,54 @@ and image render correctly. Subscribe to the RSS feed in a reader and confirm ar
 
 ### User Story 4 - Access the Site via ThroneBuilder.com (Priority: P4)
 
-The custom domain ThroneBuilder.com resolves to the Render-hosted Astro site
-over HTTPS with correct SSL. Redirects handle www and non-www uniformly.
+The custom domain ThroneBuilder.com resolves to the Render-hosted site over HTTPS
+with correct SSL. Redirects handle www and non-www uniformly.
 
 **Why this priority**: Domain and HTTPS are table stakes for a production site.
 Placed at P4 because the content stories are independently testable on the
 Render preview URL before DNS cutover.
 
-**Independent Test**: After DNS propagation, visit `https://thronebuilder.com`
-and `https://www.thronebuilder.com` and confirm both load the site over HTTPS
-with no certificate warnings.
+**Independent Test**: After DNS propagation, visit `https://thronebuilder.com` and
+`https://www.thronebuilder.com` and confirm both load the site over HTTPS with no
+certificate warnings.
 
 **Acceptance Scenarios**:
 
-1. **Given** DNS is configured, **When** a visitor navigates to `https://thronebuilder.com`,
-   **Then** the homepage loads with a valid SSL certificate.
-2. **Given** a visitor navigates to `https://www.thronebuilder.com`,
-   **Then** they are redirected to `https://thronebuilder.com` (or vice versa —
-   one canonical form is enforced).
+1. **Given** DNS is configured, **When** a visitor navigates to
+   `https://thronebuilder.com`, **Then** the homepage loads with a valid SSL
+   certificate.
+2. **Given** a visitor navigates to `https://www.thronebuilder.com`, **Then** they
+   are redirected to `https://thronebuilder.com` (or vice versa — one canonical
+   form is enforced).
 
 ---
 
 ### Edge Cases
 
-- What happens when Sanity.io is unreachable at build time?
-  The build MUST fail with a clear error rather than deploying an empty or
-  partially populated site.
-- What happens if a YouTube video URL in Sanity.io is malformed or the video
-  is removed? The page MUST render without the embed rather than showing a broken
-  player; a fallback message is acceptable.
-- What happens if a content item has no cover image? OpenGraph tags MUST fall back
+- What happens if a YouTube video URL in an article's frontmatter is malformed
+  or the video is removed? The page MUST render without the embed rather than
+  showing a broken player; a fallback message is acceptable.
+- What happens if an article has no cover image? OpenGraph tags MUST fall back
   to a site-wide default image rather than returning an empty `og:image` tag.
+- What happens if an article's Markdown has a syntax error? The build MUST fail
+  with a clear error rather than deploying a broken page.
 
 ## Requirements *(mandatory)*
 
 ### Functional Requirements
 
-- **FR-001**: The site MUST render all published articles from Sanity.io as
-  static HTML pages at build time.
-- **FR-002**: The homepage MUST display a list of published articles ordered by
-  publish date descending, showing title and excerpt.
-- **FR-003**: Each article page MUST display the full article body, title,
-  publish date, and cover image (when present).
-- **FR-004**: Article pages that include a YouTube video reference MUST embed
-  the video player inline.
-- **FR-005**: The site MUST generate a valid XML sitemap at `/sitemap.xml`
-  listing all published pages.
+- **FR-001**: The site MUST render all articles stored as Markdown files in the
+  repository as static HTML pages at build time.
+- **FR-002**: The homepage MUST display a list of articles ordered by publish date
+  descending, showing title and excerpt.
+- **FR-003**: Each article page MUST display the full article body, title, publish
+  date, and cover image (when present).
+- **FR-004**: Article pages whose frontmatter includes a YouTube video URL MUST
+  embed the video player inline.
+- **FR-005**: The site MUST generate a valid XML sitemap at `/sitemap.xml` listing
+  all article URLs with their last-modified dates.
 - **FR-006**: The site MUST generate a valid RSS feed at `/rss.xml` listing all
-  published articles with title, description, link, and publish date.
+  articles with title, description, link, and publish date.
 - **FR-007**: Every page MUST include OpenGraph meta tags: `og:title`,
   `og:description`, `og:image`, `og:url`, and `og:type`.
 - **FR-008**: Every page MUST include a canonical URL meta tag and a descriptive
@@ -155,18 +158,20 @@ with no certificate warnings.
 
 ### Key Entities
 
-- **Article**: A piece of long-form content with a title, body (rich text),
-  publish date, excerpt, cover image (optional), and an optional YouTube video URL.
-  Published/draft status controls visibility on the site.
-- **Site Settings**: Global configuration in Sanity.io: site title, site description,
-  default OpenGraph image, social links.
+- **Article**: A Markdown file committed to the repository. Frontmatter fields:
+  `title`, `pubDate`, `description` (used as excerpt and meta description),
+  `coverImage` (optional path or URL), `youtubeUrl` (optional). The file's
+  content is the article body.
+- **Site Config**: A single configuration file in the repository holding the
+  site title, site description, base URL, default OpenGraph image path, and
+  social links.
 
 ## Success Criteria *(mandatory)*
 
 ### Measurable Outcomes
 
-- **SC-001**: All published articles in Sanity.io appear on the live site within
-  one build cycle after publishing.
+- **SC-001**: All articles committed to the repository appear on the live site
+  within one Render build cycle after the commit lands on the main branch.
 - **SC-002**: The homepage and all article pages achieve a Lighthouse score ≥ 90
   across Performance, Accessibility, Best Practices, and SEO.
 - **SC-003**: The site renders correctly on Chrome, Firefox, and Safari on both
@@ -176,22 +181,21 @@ with no certificate warnings.
   respective format validators.
 - **SC-006**: Social sharing previews (OpenGraph) display the correct title,
   description, and image for each article page.
-- **SC-007**: The site loads over HTTPS at ThroneBuilder.com with no mixed-content
-  warnings and a valid SSL certificate.
+- **SC-007**: The site loads over HTTPS at ThroneBuilder.com with no
+  mixed-content warnings and a valid SSL certificate.
 
 ## Assumptions
 
-- The ThroneBuilder Sanity.io project exists and the developer has API credentials
-  to connect the Astro site to it.
+- Content is authored by committing Markdown files to the GitHub repository;
+  no external CMS UI is required.
 - The ThroneBuilder YouTube channel is public; embedded videos do not require
   authentication.
-- Render will serve the Astro site as a static site (no server-side runtime required
+- Render will serve the site as a static site (no server-side runtime required
   for the initial launch).
-- Content authors will use Sanity Studio to manage articles; no custom CMS UI is
-  in scope for this feature.
 - The ThroneBuilder.com domain DNS is accessible and can be pointed to Render's
   assigned hostname by the developer.
-- Mobile-responsive layout is required but a full design system or brand guide is
-  not yet defined — reasonable defaults will be used and refined in a later feature.
+- Mobile-responsive layout is required but a full design system or brand guide
+  is not yet defined — reasonable defaults will be used and refined in a later
+  feature.
 - Substack content will be migrated or cross-linked in a future feature; this
   feature establishes the foundation only.
