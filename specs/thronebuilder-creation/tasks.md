@@ -27,11 +27,11 @@ and testing of each story.
 **Purpose**: Create the Astro project scaffold and install all dependencies.
 No user story work can begin until this phase is complete.
 
-- [ ] T001 Initialize Astro 5 project in repo root: `npm create astro@latest . -- --template minimal --typescript strict --no-install --no-git`
-- [ ] T002 Install all npm dependencies: `npm install && npm install @astrojs/sitemap @astrojs/rss`
-- [ ] T003 [P] Configure `astro.config.mjs` — set `site: 'https://thronebuilder.com'`, `output: 'static'`, add `sitemap()` to integrations array
-- [ ] T004 [P] Create `.node-version` at repo root containing `22` to pin Node.js LTS version
-- [ ] T005 [P] Create `render.yaml` at repo root with static site config: `buildCommand: npm run build`, `staticPublishPath: ./dist`, `branch: main`
+- [x] T001 Initialize Astro 5 project in repo root: `npm create astro@latest . -- --template minimal --typescript strict --no-install --no-git`
+- [x] T002 Install all npm dependencies: `npm install && npm install @astrojs/sitemap @astrojs/rss`
+- [x] T003 [P] Configure `astro.config.mjs` — set `site: 'https://thronebuilder.com'`, `output: 'static'`, add `sitemap()` to integrations array
+- [x] T004 [P] Create `.node-version` at repo root containing `22` to pin Node.js LTS version
+- [x] T005 [P] Create `render.yaml` at repo root with static site config: `buildCommand: npm run build`, `staticPublishPath: ./dist`, `branch: main`
 
 ---
 
@@ -42,11 +42,11 @@ base layout shell, global styles, and site constants.
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T006 Create `src/consts.ts` — export `SITE_TITLE`, `SITE_DESCRIPTION`, `SITE_URL = 'https://thronebuilder.com'`, `DEFAULT_OG_IMAGE = '/images/og-default.png'`
-- [ ] T007 [P] Create `src/content/config.ts` — define `blog` collection with Zod schema: `title: z.string()`, `pubDate: z.coerce.date()`, `description: z.string()`, `coverImage: z.string().optional()`, `youtubeUrl: z.string().url().optional()`; export `collections = { blog }`
-- [ ] T008 [P] Create `src/styles/global.css` — define CSS custom properties for color palette (`--color-text`, `--color-bg`, `--color-accent`), typography scale (`--font-size-base`, `--line-height-body`), and spacing scale; add minimal CSS reset (box-sizing, margin/padding reset)
-- [ ] T009 Create `src/layouts/BaseLayout.astro` — HTML shell with `<html lang="en">`, `<head>` (charset, viewport, title slot, RSS autodiscovery `<link rel="alternate">`, global.css import), skip-navigation `<a href="#main-content">` link, `<main id="main-content">` slot; accepts `title` and `description` props; import constants from `src/consts.ts`
-- [ ] T010 [P] Add placeholder default OG image at `public/images/og-default.png` — 1200×630 px PNG; can be a solid-color placeholder to be replaced with branded image later
+- [x] T006 Create `src/consts.ts` — export `SITE_TITLE`, `SITE_DESCRIPTION`, `SITE_URL = 'https://thronebuilder.com'`, `DEFAULT_OG_IMAGE = '/images/og-default.png'`
+- [x] T007 [P] Create `src/content/config.ts` — define `blog` collection with Zod schema: `title: z.string()`, `pubDate: z.coerce.date()`, `description: z.string()`, `coverImage: z.string().optional()`, `youtubeUrl: z.string().url().optional()`; export `collections = { blog }`
+- [x] T008 [P] Create `src/styles/global.css` — define CSS custom properties for color palette (`--color-text`, `--color-bg`, `--color-accent`), typography scale (`--font-size-base`, `--line-height-body`), and spacing scale; add minimal CSS reset (box-sizing, margin/padding reset)
+- [x] T009 Create `src/layouts/BaseLayout.astro` — HTML shell with `<html lang="en">`, `<head>` (charset, viewport, title slot, RSS autodiscovery `<link rel="alternate">`, global.css import), skip-navigation `<a href="#main-content">` link, `<main id="main-content">` slot; accepts `title` and `description` props; import constants from `src/consts.ts`
+- [x] T010 [P] Add placeholder default OG image at `public/images/og-default.png` — 1200×630 px PNG; can be a solid-color placeholder to be replaced with branded image later
 
 **Checkpoint**: `npm run dev` MUST start without errors before proceeding to user stories.
 
@@ -62,10 +62,10 @@ article page renders full body, and both load with JavaScript disabled.
 
 ### Implementation for User Story 1
 
-- [ ] T011 [P] [US1] Create `src/pages/index.astro` — use `getCollection('blog')` sorted by `pubDate` descending; render article list with each item showing `title` (as link to `/blog/${slug}/`) and `description`; use `BaseLayout` with `SITE_TITLE` and `SITE_DESCRIPTION`
-- [ ] T012 [P] [US1] Create `src/pages/blog/[...slug].astro` — use `getStaticPaths()` with `getCollection('blog')`; render `BaseLayout` with article `title` and `description`; render `<h1>` from frontmatter `title`; render `pubDate` formatted as human-readable date; render `coverImage` as `<img>` with descriptive `alt` if present; render article body via `<Content />`
-- [ ] T013 [US1] Add sample article `src/content/blog/2026-05-27-hello-thronebuilder.md` — frontmatter: `title`, `pubDate: 2026-05-27`, `description`; body: two or three paragraphs of placeholder content
-- [ ] T014 [US1] Wire `BaseLayout` props correctly in both pages: `index.astro` passes site title/description; `[...slug].astro` passes article title and description (depends on T011, T012)
+- [x] T011 [P] [US1] Create `src/pages/index.astro` — use `getCollection('blog')` sorted by `pubDate` descending; render article list with each item showing `title` (as link to `/blog/${slug}/`) and `description`; use `BaseLayout` with `SITE_TITLE` and `SITE_DESCRIPTION`
+- [x] T012 [P] [US1] Create `src/pages/blog/[...slug].astro` — use `getStaticPaths()` with `getCollection('blog')`; render `BaseLayout` with article `title` and `description`; render `<h1>` from frontmatter `title`; render `pubDate` formatted as human-readable date; render `coverImage` as `<img>` with descriptive `alt` if present; render article body via `<Content />`
+- [x] T013 [US1] Add sample article `src/content/blog/2026-05-27-hello-thronebuilder.md` — frontmatter: `title`, `pubDate: 2026-05-27`, `description`; body: two or three paragraphs of placeholder content
+- [x] T014 [US1] Wire `BaseLayout` props correctly in both pages: `index.astro` passes site title/description; `[...slug].astro` passes article title and description (depends on T011, T012)
 
 **Checkpoint**: US1 complete when homepage lists the sample article and the full
 article body renders at `/blog/2026-05-27-hello-thronebuilder/` with JS disabled.
@@ -83,9 +83,9 @@ renders correctly without any embed.
 
 ### Implementation for User Story 2
 
-- [ ] T015 [P] [US2] Create `src/utils/youtube.ts` — export `extractYoutubeId(url: string): string | null` that extracts video ID from `watch?v=`, `youtu.be/`, and `/shorts/` URL formats using regex; returns `null` for unrecognized formats
-- [ ] T016 [US2] Add YouTube embed block to `src/pages/blog/[...slug].astro` — when `youtubeUrl` frontmatter is present, call `extractYoutubeId()`; if a valid ID is returned, render `<iframe src="https://www.youtube-nocookie.com/embed/{id}" loading="lazy" allowfullscreen title="{article title}">` inside a responsive wrapper `<div>`; skip the block entirely if `youtubeUrl` is absent or ID extraction returns null (depends on T015)
-- [ ] T017 [US2] Add sample article with video `src/content/blog/2026-05-27-video-example.md` — include `youtubeUrl` pointing to any public ThroneBuilder YouTube video URL
+- [x] T015 [P] [US2] Create `src/utils/youtube.ts` — export `extractYoutubeId(url: string): string | null` that extracts video ID from `watch?v=`, `youtu.be/`, and `/shorts/` URL formats using regex; returns `null` for unrecognized formats
+- [x] T016 [US2] Add YouTube embed block to `src/pages/blog/[...slug].astro` — when `youtubeUrl` frontmatter is present, call `extractYoutubeId()`; if a valid ID is returned, render `<iframe src="https://www.youtube-nocookie.com/embed/{id}" loading="lazy" allowfullscreen title="{article title}">` inside a responsive wrapper `<div>`; skip the block entirely if `youtubeUrl` is absent or ID extraction returns null (depends on T015)
+- [x] T017 [US2] Add sample article with video `src/content/blog/2026-05-27-video-example.md` — include `youtubeUrl` pointing to any public ThroneBuilder YouTube video URL
 
 **Checkpoint**: US2 complete when the video article shows an embedded player that
 plays in-page, and the non-video article pages are unaffected.
@@ -103,8 +103,8 @@ Inspect `<head>` source on homepage and an article page for all required OG tags
 
 ### Implementation for User Story 3
 
-- [ ] T018 [P] [US3] Create `src/pages/rss.xml.ts` — export `GET()` using `@astrojs/rss` `rss()` function; channel: `title: SITE_TITLE`, `description: SITE_DESCRIPTION`, `site: SITE_URL`; items: map `getCollection('blog')` entries to `{ title, pubDate, description, link: /blog/${slug}/ }`; set `customData: '<language>en-us</language>'`
-- [ ] T019 [US3] Add OpenGraph and canonical meta tags to `src/layouts/BaseLayout.astro` — add props `canonicalUrl: string`, `ogImage?: string`; render `<meta property="og:title">`, `<meta property="og:description">`, `<meta property="og:image">` (fallback to `DEFAULT_OG_IMAGE`), `<meta property="og:url">`, `<meta property="og:type">`, `<meta name="twitter:card" content="summary_large_image">`, `<meta name="description">`, `<link rel="canonical">`; update `[...slug].astro` and `index.astro` to pass `canonicalUrl` and `ogImage` props (depends on T009)
+- [x] T018 [P] [US3] Create `src/pages/rss.xml.ts` — export `GET()` using `@astrojs/rss` `rss()` function; channel: `title: SITE_TITLE`, `description: SITE_DESCRIPTION`, `site: SITE_URL`; items: map `getCollection('blog')` entries to `{ title, pubDate, description, link: /blog/${slug}/ }`; set `customData: '<language>en-us</language>'`
+- [x] T019 [US3] Add OpenGraph and canonical meta tags to `src/layouts/BaseLayout.astro` — add props `canonicalUrl: string`, `ogImage?: string`; render `<meta property="og:title">`, `<meta property="og:description">`, `<meta property="og:image">` (fallback to `DEFAULT_OG_IMAGE`), `<meta property="og:url">`, `<meta property="og:type">`, `<meta name="twitter:card" content="summary_large_image">`, `<meta name="description">`, `<link rel="canonical">`; update `[...slug].astro` and `index.astro` to pass `canonicalUrl` and `ogImage` props (depends on T009)
 - [ ] T020 [US3] Verify sitemap generation: run `npm run build`; confirm `dist/sitemap-index.xml` and `dist/sitemap-0.xml` exist and contain all article URLs; fix `astro.config.mjs` if sitemap is missing
 
 **Checkpoint**: US3 complete when sitemap lists all articles, RSS feed is valid

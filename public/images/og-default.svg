@@ -1,0 +1,9 @@
+<!-- Placeholder OG image (1200x630). Replace with a branded PNG before launch.
+     Update DEFAULT_OG_IMAGE in src/consts.ts to '/images/og-default.png'. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#1a1a2e"/>
+  <text x="600" y="280" font-family="Georgia, serif" font-size="80" font-weight="bold"
+        fill="#f8f8f2" text-anchor="middle">ThroneBuilder</text>
+  <text x="600" y="370" font-family="Georgia, serif" font-size="32"
+        fill="#b84a00" text-anchor="middle">Strategy · History · Analysis</text>
+</svg>
