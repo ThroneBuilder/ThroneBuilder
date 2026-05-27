@@ -1,0 +1,177 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_URL, DEFAULT_OG_IMAGE } from '../../consts';
+import { extractYoutubeId } from '../../utils/youtube';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const canonicalUrl = `${SITE_URL}/blog/${post.slug}/`;
+const ogImage = post.data.coverImage ?? DEFAULT_OG_IMAGE;
+const youtubeId = post.data.youtubeUrl
+  ? extractYoutubeId(post.data.youtubeUrl)
+  : null;
+---
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  canonicalUrl={canonicalUrl}
+  ogImage={ogImage}
+  ogType="article"
+>
+  <article class="article-wrapper">
+    <header class="article-header">
+      <h1>{post.data.title}</h1>
+      <time datetime={post.data.pubDate.toISOString()}>
+        {post.data.pubDate.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })}
+      </time>
+    </header>
+
+    {post.data.coverImage && (
+      <img
+        src={post.data.coverImage}
+        alt={`Cover image for ${post.data.title}`}
+        width="1200"
+        height="630"
+        class="cover-image"
+      />
+    )}
+
+    {youtubeId && (
+      <div class="video-wrapper">
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${youtubeId}`}
+          loading="lazy"
+          allowfullscreen
+          title={`Video: ${post.data.title}`}
+        ></iframe>
+      </div>
+    )}
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <footer class="article-footer">
+      <a href="/">&larr; All articles</a>
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .article-wrapper {
+    max-width: var(--max-width-content);
+    margin: 0 auto;
+    padding: var(--spacing-8) var(--spacing-4);
+  }
+
+  .article-header {
+    margin-bottom: var(--spacing-6);
+    padding-bottom: var(--spacing-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .article-header h1 {
+    font-size: var(--font-size-3xl);
+    line-height: var(--line-height-heading);
+    margin-bottom: var(--spacing-2);
+  }
+
+  time {
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+  }
+
+  .cover-image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    margin: var(--spacing-6) 0;
+  }
+
+  /* Prose styles for rendered Markdown body */
+  .prose :global(h2) {
+    font-size: var(--font-size-2xl);
+    line-height: var(--line-height-heading);
+    margin: var(--spacing-8) 0 var(--spacing-4);
+  }
+
+  .prose :global(h3) {
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-heading);
+    margin: var(--spacing-6) 0 var(--spacing-4);
+  }
+
+  .prose :global(p) {
+    margin-bottom: var(--spacing-4);
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin: 0 0 var(--spacing-4) var(--spacing-6);
+  }
+
+  .prose :global(li) {
+    margin-bottom: var(--spacing-1);
+  }
+
+  .prose :global(blockquote) {
+    border-left: 4px solid var(--color-accent);
+    padding-left: var(--spacing-4);
+    margin: var(--spacing-6) 0;
+    color: var(--color-muted);
+    font-style: italic;
+  }
+
+  .prose :global(pre) {
+    background: var(--color-text);
+    color: var(--color-bg);
+    padding: var(--spacing-4);
+    border-radius: var(--border-radius);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .prose :global(code) {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+  }
+
+  .prose :global(a) {
+    color: var(--color-accent);
+  }
+
+  .prose :global(img) {
+    border-radius: var(--border-radius);
+    margin: var(--spacing-4) 0;
+  }
+
+  .article-footer {
+    margin-top: var(--spacing-12);
+    padding-top: var(--spacing-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .article-footer a {
+    color: var(--color-muted);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+  }
+
+  .article-footer a:hover {
+    color: var(--color-accent);
+  }
+</style>
