@@ -105,7 +105,7 @@ Inspect `<head>` source on homepage and an article page for all required OG tags
 
 - [x] T018 [P] [US3] Create `src/pages/rss.xml.ts` — export `GET()` using `@astrojs/rss` `rss()` function; channel: `title: SITE_TITLE`, `description: SITE_DESCRIPTION`, `site: SITE_URL`; items: map `getCollection('blog')` entries to `{ title, pubDate, description, link: /blog/${slug}/ }`; set `customData: '<language>en-us</language>'`
 - [x] T019 [US3] Add OpenGraph and canonical meta tags to `src/layouts/BaseLayout.astro` — add props `canonicalUrl: string`, `ogImage?: string`; render `<meta property="og:title">`, `<meta property="og:description">`, `<meta property="og:image">` (fallback to `DEFAULT_OG_IMAGE`), `<meta property="og:url">`, `<meta property="og:type">`, `<meta name="twitter:card" content="summary_large_image">`, `<meta name="description">`, `<link rel="canonical">`; update `[...slug].astro` and `index.astro` to pass `canonicalUrl` and `ogImage` props (depends on T009)
-- [ ] T020 [US3] Verify sitemap generation: run `npm run build`; confirm `dist/sitemap-index.xml` and `dist/sitemap-0.xml` exist and contain all article URLs; fix `astro.config.mjs` if sitemap is missing
+- [x] T020 [US3] Verify sitemap generation: run `npm run build`; confirm `dist/sitemap-index.xml` and `dist/sitemap-0.xml` exist and contain all article URLs; fix `astro.config.mjs` if sitemap is missing
 
 **Checkpoint**: US3 complete when sitemap lists all articles, RSS feed is valid
 RSS 2.0, and OG tags are present and correct on all pages.
@@ -123,9 +123,9 @@ certificate warnings. One redirects to the other consistently.
 
 ### Implementation for User Story 4
 
-- [ ] T021 [US4] Connect GitHub repository to Render: log into render.com → New → Static Site → connect `ThroneBuilder` GitHub repo; confirm build command `npm run build`, publish directory `dist`, branch `main`; trigger first manual deploy and verify preview URL loads the site
-- [ ] T022 [US4] Configure custom domain in Render dashboard: add `thronebuilder.com` under Settings → Custom Domains; copy Render-provided CNAME/A record values
-- [ ] T023 [US4] Update DNS at domain registrar: point `thronebuilder.com` (and `www.thronebuilder.com`) to the Render-provided DNS values from T022; wait for propagation (typically 5–30 minutes)
+- [x] T021 [US4] Connect GitHub repository to Render: log into render.com → New → Static Site → connect `ThroneBuilder` GitHub repo; confirm build command `npm run build`, publish directory `dist`, branch `main`; trigger first manual deploy and verify preview URL loads the site
+- [x] T022 [US4] Configure custom domain in Render dashboard: add `thronebuilder.com` under Settings → Custom Domains; copy Render-provided CNAME/A record values
+- [x] T023 [US4] Update DNS at domain registrar: point `thronebuilder.com` (and `www.thronebuilder.com`) to the Render-provided DNS values from T022; wait for propagation (typically 5–30 minutes)
 
 **Checkpoint**: US4 complete when both `https://thronebuilder.com` and
 `https://www.thronebuilder.com` load with valid SSL and one consistently
