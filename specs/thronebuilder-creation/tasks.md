@@ -123,7 +123,7 @@ certificate warnings. One redirects to the other consistently.
 
 ### Implementation for User Story 4
 
-- [ ] T021 [US4] Connect GitHub repository to Render: log into render.com → New → Static Site → connect `ThroneBuilder` GitHub repo; confirm build command `npm run build`, publish directory `dist`, branch `main`; trigger first manual deploy and verify preview URL loads the site
+- [x] T021 [US4] Connect GitHub repository to Render: log into render.com → New → Static Site → connect `ThroneBuilder` GitHub repo; confirm build command `npm run build`, publish directory `dist`, branch `main`; trigger first manual deploy and verify preview URL loads the site
 - [ ] T022 [US4] Configure custom domain in Render dashboard: add `thronebuilder.com` under Settings → Custom Domains; copy Render-provided CNAME/A record values
 - [ ] T023 [US4] Update DNS at domain registrar: point `thronebuilder.com` (and `www.thronebuilder.com`) to the Render-provided DNS values from T022; wait for propagation (typically 5–30 minutes)
 
