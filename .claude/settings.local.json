@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git branch *)",
+      "Bash(mkdir -p \"c:\\\\Users\\\\jjame\\\\projects\\\\ThroneBuilder\\\\specs\\\\thronebuilder-creation\\\\checklists\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\jjame\\projects\\ThroneBuilder\\specs\\thronebuilder-creation"
+    ]
+  }
+}
