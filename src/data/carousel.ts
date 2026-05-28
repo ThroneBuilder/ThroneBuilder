@@ -7,7 +7,9 @@ export interface CarouselSlide {
 }
 
 export const carouselSlides: CarouselSlide[] = [
-  // Add entries here when carousel images are ready.
-  // Example:
-  // { tag: 'legos', image: '/images/carousel/legos.jpg', tagline: 'Brick by brick' },
+  { tag: 'family' as Tag, image: '/images/carousel/Family.jpg', tagline: 'Role of partner, parent, sibling, son' },
+  { tag: 'friends' as Tag, image: '/images/carousel/Friends.JPEG', tagline: 'Show-up, hear and celebrate friends' },
+  { tag: 'career' as Tag, image: '/images/carousel/Career.JPEG', tagline: 'Productivity from graduate school to big-tech' },
+  { tag: 'alomac' as Tag, image: '/images/carousel/Alomac.JPEG', tagline: 'Entreprenural side-gig with my brother' },
+  { tag: 'legos' as Tag, image: '/images/carousel/Legos.JPEG', tagline: 'My own creations (MOC) in LEGO' },
 ];
