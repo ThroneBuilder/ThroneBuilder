@@ -7,15 +7,22 @@ const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
 );
 
+function ytThumbnail(url: string | undefined): string | undefined {
+  if (!url) return undefined;
+  const m = url.match(/(?:youtu\.be\/|[?&]v=)([A-Za-z0-9_-]{11})/);
+  return m ? `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg` : undefined;
+}
+
 type Variant = 'featured' | 'standard' | 'text';
-const postsWithVariants = posts.map((post, index): { post: typeof post; variant: Variant } => ({
-  post,
-  variant: index === 0 && post.data.coverImage
+const postsWithVariants = posts.map((post, index) => {
+  const effectiveCover = post.data.coverImage ?? ytThumbnail(post.data.youtubeUrl);
+  const variant: Variant = index === 0 && effectiveCover
     ? 'featured'
-    : post.data.coverImage
+    : effectiveCover
     ? 'standard'
-    : 'text',
-}));
+    : 'text';
+  return { post, variant, effectiveCover };
+});
 ---
 <BaseLayout
   title={SITE_TITLE}
@@ -40,14 +47,14 @@ const postsWithVariants = posts.map((post, index): { post: typeof post; variant:
         <p class="empty">No articles yet. Check back soon.</p>
       )}
       <div class="article-grid">
-        {postsWithVariants.map(({ post, variant }) => (
+        {postsWithVariants.map(({ post, variant, effectiveCover }) => (
           <article
             class={`post-card post-card--${variant}`}
             data-tags={post.data.tags.join(',')}
           >
-            {variant === 'featured' && post.data.coverImage && (
+            {variant === 'featured' && effectiveCover && (
               <img
-                src={post.data.coverImage}
+                src={effectiveCover}
                 alt=""
                 loading="eager"
                 fetchpriority="high"
@@ -55,9 +62,9 @@ const postsWithVariants = posts.map((post, index): { post: typeof post; variant:
                 height="600"
               />
             )}
-            {variant === 'standard' && post.data.coverImage && (
+            {variant === 'standard' && effectiveCover && (
               <img
-                src={post.data.coverImage}
+                src={effectiveCover}
                 alt=""
                 loading="lazy"
                 width="800"
