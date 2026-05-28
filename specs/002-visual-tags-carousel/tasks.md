@@ -27,7 +27,7 @@ testing, and progressive deployment (P1 → P2 → P3 → P4).
 **Purpose**: Create the one new directory this feature requires. The Astro project
 already exists; no npm changes are needed.
 
-- [ ] T001 Create `public/images/carousel/.gitkeep` — ensures the carousel images directory is tracked by git; site owners place carousel images here
+- [x] T001 Create `public/images/carousel/.gitkeep` — ensures the carousel images directory is tracked by git; site owners place carousel images here
 
 **Checkpoint**: Directory exists in repo, `npm run build` still passes.
 
@@ -40,9 +40,9 @@ Must be complete before any user story implementation begins.
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T002 [P] Add `TAG_VALUES` and `Tag` type to `src/consts.ts` — export `export const TAG_VALUES = ['family', 'friends', 'career', 'alomac', 'legos'] as const` and `export type Tag = typeof TAG_VALUES[number]`
-- [ ] T003 [P] Update `src/content/config.ts` — import `TAG_VALUES` from `../consts`; add `tags: z.array(z.enum(TAG_VALUES)).optional().default([])` to the blog collection Zod schema (after the `youtubeUrl` field)
-- [ ] T004 [P] Create `src/data/carousel.ts` — define and export `CarouselSlide` interface (`tag: Tag`, `image: string`, `tagline: string`) and export `carouselSlides: CarouselSlide[] = []` as an empty array (slides populated in US3)
+- [x] T002 [P] Add `TAG_VALUES` and `Tag` type to `src/consts.ts` — export `export const TAG_VALUES = ['family', 'friends', 'career', 'alomac', 'legos'] as const` and `export type Tag = typeof TAG_VALUES[number]`
+- [x] T003 [P] Update `src/content/config.ts` — import `TAG_VALUES` from `../consts`; add `tags: z.array(z.enum(TAG_VALUES)).optional().default([])` to the blog collection Zod schema (after the `youtubeUrl` field)
+- [x] T004 [P] Create `src/data/carousel.ts` — define and export `CarouselSlide` interface (`tag: Tag`, `image: string`, `tagline: string`) and export `carouselSlides: CarouselSlide[] = []` as an empty array (slides populated in US3)
 
 **Checkpoint**: `npm run build` passes with zero errors. Schema change is additive
 (existing articles without `tags` field get an empty array default — no breaking change).
