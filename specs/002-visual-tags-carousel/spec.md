@@ -111,6 +111,38 @@ first slide (or a static grid of category cards) is visible and readable.
 
 ---
 
+### User Story 4 — Find Contact and Social Links (Priority: P4)
+
+A visitor who wants to contact the site owner or follow ThroneBuilder on social
+media finds a clearly organized set of links in a persistent footer visible on
+every page of the site. Links are grouped by type (contact, professional,
+social/video) so visitors know what to expect before clicking. The footer appears
+on the homepage and on every article page.
+
+**Why this priority**: Contact and social links give visitors a way to engage
+beyond reading. Placed at P4 because the content and visual redesign deliver the
+core value; the footer is a standard quality-of-life addition that rounds out the
+site.
+
+**Independent Test**: Load the homepage and an article page. Verify the footer
+is present on both. Click each link and confirm it opens the correct destination.
+Verify links open in a new tab so the visitor does not leave ThroneBuilder.com.
+Verify the footer is legible and not broken at mobile viewport widths.
+
+**Acceptance Scenarios**:
+
+1. **Given** a visitor is on any page, **When** they scroll to the bottom,
+   **Then** a footer is visible containing categorized contact and social links.
+2. **Given** a visitor clicks an email link in the footer, **When** their mail
+   client opens, **Then** the correct email address is pre-filled.
+3. **Given** a visitor clicks a social or professional link in the footer,
+   **When** the link opens, **Then** it opens in a new browser tab and takes the
+   visitor to the correct external profile.
+4. **Given** a visitor is on a mobile device, **When** they scroll to the footer,
+   **Then** the links are legible and tappable without horizontal scrolling.
+
+---
+
 ### Edge Cases
 
 - What happens when an article has no tag assigned? It must still appear in the "All"
@@ -125,6 +157,9 @@ first slide (or a static grid of category cards) is visible and readable.
 - What happens to the active tag filter if the visitor navigates to an article and
   uses the browser back button? The filter state need not persist across navigation
   (stateless is acceptable for v1).
+- What happens if a footer link URL changes? The footer link list is stored in a
+  single configuration location so any URL can be updated in one place without
+  touching page templates.
 
 ## Requirements *(mandatory)*
 
@@ -157,6 +192,11 @@ first slide (or a static grid of category cards) is visible and readable.
   (tags visible, all articles shown, carousel content visible in static form).
 - **FR-013**: All four Lighthouse scores MUST remain ≥ 90 after this feature is
   deployed.
+- **FR-014**: Every page MUST include a persistent footer containing the site
+  owner's contact and social links, organized into labeled groups (contact,
+  professional, social/video).
+- **FR-015**: All footer links to external sites MUST open in a new tab; email
+  links MUST use the mailto: protocol so they open in the visitor's mail client.
 
 ### Key Entities
 
@@ -168,6 +208,12 @@ first slide (or a static grid of category cards) is visible and readable.
   it represents), image (path to a photo supplied by the site owner), tagline
   (short marketing phrase, e.g., "Brick by brick"). A slide only appears in the
   carousel if both image and tagline are configured.
+- **Site Links**: Footer link configuration. Groups and values:
+  - *Contact*: jeff@thronebuilder.com (primary), jjames315@live.com (personal)
+  - *Professional*: linkedin.com/in/jeff-james
+  - *Code*: github.com/ThroneBuilder
+  - *Video*: youtube.com/@thronebuilder
+  - *Social*: facebook.com/ThroneBuilder (brand page), facebook.com/jjames315 (personal)
 
 ## Success Criteria *(mandatory)*
 
@@ -189,6 +235,8 @@ first slide (or a static grid of category cards) is visible and readable.
 - **SC-007**: All four Lighthouse scores remain ≥ 90 on the redesigned homepage.
 - **SC-008**: The homepage and article pages render correctly at mobile viewport
   widths (≤ 480 px) with no horizontal overflow.
+- **SC-009**: Every link in the footer is reachable and navigates to the correct
+  destination; external links open in a new tab without leaving ThroneBuilder.com.
 
 ## Assumptions
 
@@ -208,5 +256,7 @@ first slide (or a static grid of category cards) is visible and readable.
   site).
 - Carousel slide configuration (image path + tagline per tag) is stored in the
   repository as a data file, not inside individual articles.
-- Article pages (the full-article view) are not redesigned in this feature; only
-  the homepage is affected.
+- Article pages (the full-article view) are not visually redesigned in this
+  feature; however the footer (US4) is added to all pages via the shared layout.
+- Footer link configuration is stored alongside the existing site constants so
+  all links are updated in one file.

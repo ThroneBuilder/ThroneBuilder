@@ -38,5 +38,7 @@
   (no filtering) — this matches the static Astro architecture.
 - Carousel slide configuration stored as a repo data file (not per-article
   frontmatter) — scoped clearly in Key Entities.
-- Article page redesign explicitly excluded from this feature scope.
+- Article page visual redesign excluded from scope; footer (US4) is added to all
+  pages via the shared layout.
+- Site Links entity records the actual link values supplied by the site owner.
 - Spec is ready for `/speckit-plan`.
