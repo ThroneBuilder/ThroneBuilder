@@ -4,7 +4,7 @@
 
 **Created**: 2026-05-26
 
-**Status**: Draft
+**Status**: Implemented
 
 **Input**: User description: "Build ThroneBuilder.com using this tech stack:
 1. GitHub as the source of truth.
@@ -52,7 +52,7 @@ YouTube channel.
 **Why this priority**: Video is a primary content format for ThroneBuilder. Embedding
 YouTube keeps hosting costs zero while surfacing that content on the owned domain.
 
-**Independent Test**: Add a Markdown article with a `youtube_url` frontmatter field.
+**Independent Test**: Add a Markdown article with a `youtubeUrl` frontmatter field.
 Confirm the video embeds and plays on the corresponding page without leaving the site.
 
 **Acceptance Scenarios**:
@@ -80,7 +80,7 @@ and image render correctly. Subscribe to the RSS feed in a reader and confirm ar
 
 **Acceptance Scenarios**:
 
-1. **Given** the site is deployed, **When** a crawler requests `/sitemap.xml`,
+1. **Given** the site is deployed, **When** a crawler requests `/sitemap-index.xml`,
    **Then** all published article URLs are listed with their last-modified dates.
 2. **Given** the site is deployed, **When** a crawler requests `/rss.xml`,
    **Then** all published articles appear as valid RSS feed items with title,
@@ -121,7 +121,7 @@ certificate warnings.
 
 - What happens if a YouTube video URL in an article's frontmatter is malformed
   or the video is removed? The page MUST render without the embed rather than
-  showing a broken player; a fallback message is acceptable.
+  showing a broken player; silently omitting the embed block is acceptable.
 - What happens if an article has no cover image? OpenGraph tags MUST fall back
   to a site-wide default image rather than returning an empty `og:image` tag.
 - What happens if an article's Markdown has a syntax error? The build MUST fail
@@ -139,7 +139,7 @@ certificate warnings.
   date, and cover image (when present).
 - **FR-004**: Article pages whose frontmatter includes a YouTube video URL MUST
   embed the video player inline.
-- **FR-005**: The site MUST generate a valid XML sitemap at `/sitemap.xml` listing
+- **FR-005**: The site MUST generate a valid XML sitemap at `/sitemap-index.xml` listing
   all article URLs with their last-modified dates.
 - **FR-006**: The site MUST generate a valid RSS feed at `/rss.xml` listing all
   articles with title, description, link, and publish date.
@@ -163,8 +163,7 @@ certificate warnings.
   `coverImage` (optional path or URL), `youtubeUrl` (optional). The file's
   content is the article body.
 - **Site Config**: A single configuration file in the repository holding the
-  site title, site description, base URL, default OpenGraph image path, and
-  social links.
+  site title, site description, base URL, and default OpenGraph image path.
 
 ## Success Criteria *(mandatory)*
 

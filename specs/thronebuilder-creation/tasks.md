@@ -42,11 +42,11 @@ base layout shell, global styles, and site constants.
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [x] T006 Create `src/consts.ts` — export `SITE_TITLE`, `SITE_DESCRIPTION`, `SITE_URL = 'https://thronebuilder.com'`, `DEFAULT_OG_IMAGE = '/images/og-default.png'`
+- [x] T006 Create `src/consts.ts` — export `SITE_TITLE`, `SITE_DESCRIPTION`, `SITE_URL = 'https://thronebuilder.com'`, `DEFAULT_OG_IMAGE = '/images/og-default.svg'`
 - [x] T007 [P] Create `src/content/config.ts` — define `blog` collection with Zod schema: `title: z.string()`, `pubDate: z.coerce.date()`, `description: z.string()`, `coverImage: z.string().optional()`, `youtubeUrl: z.string().url().optional()`; export `collections = { blog }`
 - [x] T008 [P] Create `src/styles/global.css` — define CSS custom properties for color palette (`--color-text`, `--color-bg`, `--color-accent`), typography scale (`--font-size-base`, `--line-height-body`), and spacing scale; add minimal CSS reset (box-sizing, margin/padding reset)
 - [x] T009 Create `src/layouts/BaseLayout.astro` — HTML shell with `<html lang="en">`, `<head>` (charset, viewport, title slot, RSS autodiscovery `<link rel="alternate">`, global.css import), skip-navigation `<a href="#main-content">` link, `<main id="main-content">` slot; accepts `title` and `description` props; import constants from `src/consts.ts`
-- [x] T010 [P] Add placeholder default OG image at `public/images/og-default.png` — 1200×630 px PNG; can be a solid-color placeholder to be replaced with branded image later
+- [x] T010 [P] Add placeholder default OG image at `public/images/og-default.svg` — 1200×630 px PNG; can be a solid-color placeholder to be replaced with branded image later
 
 **Checkpoint**: `npm run dev` MUST start without errors before proceeding to user stories.
 
@@ -140,6 +140,7 @@ are independently verified.
 
 - [ ] T024 [P] Run Lighthouse audit on the live Render URL or `npm run preview` — target all four scores ≥ 90 (Performance, Accessibility, Best Practices, SEO) on both desktop and mobile; fix any failures before marking complete
 - [ ] T025 [P] WCAG 2.1 AA review: verify body text color contrast ≥ 4.5:1, all `<img>` tags have non-empty descriptive `alt` attributes, heading hierarchy is sequential (no skipped levels), keyboard focus indicators are visible on all interactive elements
+- [ ] T028 [P] Cross-browser and mobile testing (SC-003): open the homepage and one article page in Chrome, Firefox, and Safari; verify layout and content render correctly on both desktop and a mobile viewport (375 px wide); record any visual regressions
 - [ ] T026 Run final clean build: `npm run build`; confirm zero errors and zero warnings in the build output
 - [ ] T027 [P] Update `specs/thronebuilder-creation/checklists/requirements.md` — mark all success criteria (SC-001 through SC-007) as verified with observed evidence (e.g., Lighthouse scores, validator results)
 
@@ -177,7 +178,7 @@ are independently verified.
 - T011, T012 can run in parallel (Phase 3, different files); T014 depends on both
 - T015 before T016; T016 and T017 can run in parallel (different files)
 - T018, T019 can run in parallel (Phase 5, different files)
-- T024, T025, T027 can run in parallel (Phase 7, independent checks)
+- T024, T025, T027, T028 can run in parallel (Phase 7, independent checks)
 
 ---
 
