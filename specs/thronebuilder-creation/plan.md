@@ -86,7 +86,7 @@ specs/thronebuilder-creation/
 ├── public/
 │   ├── favicon.svg
 │   └── images/
-│       └── og-default.png          # fallback OpenGraph image
+│       └── og-default.svg          # fallback OpenGraph image
 ├── src/
 │   ├── content/
 │   │   ├── config.ts               # Content Collections schema (Zod)

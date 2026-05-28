@@ -2,6 +2,7 @@
 title: "Extreme Ironing"
 pubDate: 2018-09-24
 description: "How being unreasonable can lead to self-discovery"
+tags: ["friends"]
 ---
 
 ::: captioned-image-container

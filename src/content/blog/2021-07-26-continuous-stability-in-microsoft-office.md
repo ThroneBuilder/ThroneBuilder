@@ -2,6 +2,7 @@
 title: "Continuous Stability in Microsoft Office"
 pubDate: 2021-07-26
 description: "CI/CD to simplify software development and enable subscription revenue"
+tags: ["career"]
 ---
 
 *Written July 26, 2021. Reposted April 1, 2026.*

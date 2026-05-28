@@ -72,6 +72,12 @@ a {
   color: var(--color-accent);
 }
 
+a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 /* ============================================================
    Skip Navigation (Accessibility — WCAG 2.1 AA)
    ============================================================ */
@@ -112,4 +118,85 @@ a {
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+/* ============================================================
+   Progressive Enhancement — JS class toggle
+   ============================================================ */
+.js-only {
+  display: none;
+}
+
+.js .js-only {
+  display: revert;
+}
+
+/* ============================================================
+   Screen-reader utility
+   ============================================================ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================
+   Tag badges (shown on article cards)
+   ============================================================ */
+.tag-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-family: Georgia, serif;
+  line-height: 1;
+  padding: 0.2em 0.55em;
+  border-radius: 0.25em;
+  background-color: var(--color-border);
+  color: var(--color-muted);
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+/* ============================================================
+   Filter bar (tag filter buttons above article list)
+   ============================================================ */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-6);
+}
+
+.filter-btn {
+  font-size: var(--font-size-sm);
+  font-family: Georgia, serif;
+  padding: 0.35em 0.85em;
+  border: 1px solid var(--color-border);
+  border-radius: 2em;
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.filter-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.filter-btn[aria-pressed="true"] {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+.filter-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }

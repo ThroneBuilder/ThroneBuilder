@@ -2,6 +2,7 @@
 title: "Engineering the Impossible"
 pubDate: 2026-04-27
 description: "Lessons in persistence and structural engineering"
+tags: ["legos"]
 ---
 
 ::: captioned-image-container
