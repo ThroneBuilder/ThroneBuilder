@@ -6,6 +6,16 @@ import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL, TAG_VALUES } from '../consts';
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
 );
+
+type Variant = 'featured' | 'standard' | 'text';
+const postsWithVariants = posts.map((post, index): { post: typeof post; variant: Variant } => ({
+  post,
+  variant: index === 0 && post.data.coverImage
+    ? 'featured'
+    : post.data.coverImage
+    ? 'standard'
+    : 'text',
+}));
 ---
 <BaseLayout
   title={SITE_TITLE}
@@ -29,31 +39,54 @@ const posts = (await getCollection('blog')).sort(
       {posts.length === 0 && (
         <p class="empty">No articles yet. Check back soon.</p>
       )}
-      {posts.map((post) => (
-        <article
-          class="post-card"
-          data-tags={post.data.tags.join(',')}
-        >
-          <h2>
-            <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
-          </h2>
-          <time datetime={post.data.pubDate.toISOString()}>
-            {post.data.pubDate.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </time>
-          {post.data.tags.length > 0 && (
-            <div class="tag-list">
-              {post.data.tags.map((tag) => (
-                <span class="tag-badge">{tag}</span>
-              ))}
+      <div class="article-grid">
+        {postsWithVariants.map(({ post, variant }) => (
+          <article
+            class={`post-card post-card--${variant}`}
+            data-tags={post.data.tags.join(',')}
+          >
+            {variant === 'featured' && post.data.coverImage && (
+              <img
+                src={post.data.coverImage}
+                alt=""
+                loading="eager"
+                fetchpriority="high"
+                width="1440"
+                height="600"
+              />
+            )}
+            {variant === 'standard' && post.data.coverImage && (
+              <img
+                src={post.data.coverImage}
+                alt=""
+                loading="lazy"
+                width="800"
+                height="450"
+              />
+            )}
+            <div class={variant === 'featured' ? 'post-card__overlay' : 'post-card__body'}>
+              <time datetime={post.data.pubDate.toISOString()}>
+                {post.data.pubDate.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </time>
+              <h2>
+                <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+              </h2>
+              {post.data.tags.length > 0 && (
+                <div class="tag-list">
+                  {post.data.tags.map((tag) => (
+                    <span class="tag-badge">{tag}</span>
+                  ))}
+                </div>
+              )}
+              <p>{post.data.description}</p>
             </div>
-          )}
-          <p>{post.data.description}</p>
-        </article>
-      ))}
+          </article>
+        ))}
+      </div>
       <p class="empty filter-empty" aria-live="polite" hidden>No articles match this filter.</p>
     </section>
   </div>
@@ -61,11 +94,12 @@ const posts = (await getCollection('blog')).sort(
 
 <style>
   .page-wrapper {
-    max-width: var(--max-width-content);
+    max-width: 80rem;
     margin: 0 auto;
     padding: 0 var(--spacing-4);
   }
 
+  /* ---- Site header ---- */
   .site-header {
     padding: var(--spacing-12) 0 var(--spacing-8);
     border-bottom: 2px solid var(--color-border);
@@ -73,7 +107,8 @@ const posts = (await getCollection('blog')).sort(
   }
 
   .site-header h1 {
-    font-size: var(--font-size-3xl);
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
     line-height: var(--line-height-heading);
     margin-bottom: var(--spacing-2);
   }
@@ -83,39 +118,130 @@ const posts = (await getCollection('blog')).sort(
     font-size: var(--font-size-lg);
   }
 
-  .post-card {
-    padding: var(--spacing-6) 0;
-    border-bottom: 1px solid var(--color-border);
+  /* ---- Magazine grid ---- */
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+    margin-bottom: var(--spacing-4);
   }
 
-  .post-card h2 {
-    font-size: var(--font-size-xl);
+  /* ---- Featured card (first article with cover image, full width) ---- */
+  .post-card--featured {
+    grid-column: 1 / -1;
+    position: relative;
+  }
+
+  .post-card--featured img {
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    height: auto;
+    object-fit: cover;
+    display: block;
+  }
+
+  .post-card__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.72));
+    color: #fff;
+  }
+
+  .post-card__overlay time {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: var(--spacing-1);
+  }
+
+  .post-card__overlay h2 {
+    font-family: var(--font-display);
+    font-size: var(--font-size-2xl);
     line-height: var(--line-height-heading);
     margin-bottom: var(--spacing-1);
   }
 
-  .post-card h2 a {
+  .post-card__overlay h2 a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .post-card__overlay h2 a:hover,
+  .post-card__overlay h2 a:focus {
+    text-decoration: underline;
+  }
+
+  .post-card__overlay h2 a:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .post-card__overlay .tag-badge {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* ---- Standard + text cards (3-up grid) ---- */
+  .post-card--standard,
+  .post-card--text {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-card--standard img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    margin-bottom: var(--spacing-2);
+  }
+
+  .post-card__body {
+    flex: 1;
+    padding-bottom: var(--spacing-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .post-card__body time {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+    margin-bottom: var(--spacing-1);
+  }
+
+  .post-card__body h2 {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-heading);
+    margin-bottom: var(--spacing-1);
+  }
+
+  .post-card__body h2 a {
     color: var(--color-text);
     text-decoration: none;
   }
 
-  .post-card h2 a:hover,
-  .post-card h2 a:focus {
+  .post-card__body h2 a:hover,
+  .post-card__body h2 a:focus {
     color: var(--color-accent);
     text-decoration: underline;
   }
 
-  .post-card h2 a:focus-visible {
+  .post-card__body h2 a:focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
     border-radius: 2px;
   }
 
-  time {
-    display: block;
+  .post-card__body p {
     font-size: var(--font-size-sm);
     color: var(--color-muted);
-    margin-bottom: var(--spacing-2);
+    margin-top: var(--spacing-2);
+    line-height: 1.5;
   }
 
   .tag-list {
@@ -128,6 +254,25 @@ const posts = (await getCollection('blog')).sort(
   .empty {
     color: var(--color-muted);
     padding: var(--spacing-8) 0;
+  }
+
+  /* ---- Responsive breakpoints ---- */
+  @media (max-width: 768px) {
+    .post-card--standard,
+    .post-card--text {
+      grid-column: span 6;
+    }
+
+    .post-card--featured img {
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .post-card--standard,
+    .post-card--text {
+      grid-column: 1 / -1;
+    }
   }
 </style>
 
