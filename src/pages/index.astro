@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL, TAG_VALUES } from '../consts';
+import { carouselSlides } from '../data/carousel';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
@@ -44,67 +45,91 @@ const postsWithVariants = posts.map((post, index) => {
       <p class="tagline">{SITE_DESCRIPTION}</p>
     </header>
 
-    <nav class="filter-bar js-only" aria-label="Filter articles by tag">
-      <button class="filter-btn" data-filter="all" aria-pressed="true">All</button>
-      {TAG_VALUES.map((tag) => (
-        <button class="filter-btn" data-filter={tag} aria-pressed="false">{tag}</button>
-      ))}
-    </nav>
-
-    <section aria-label="Articles" id="article-list">
-      {posts.length === 0 && (
-        <p class="empty">No articles yet. Check back soon.</p>
-      )}
-      <div class="article-grid">
-        {postsWithVariants.map(({ post, variant, effectiveCover }) => (
-          <article
-            class={`post-card post-card--${variant}`}
-            data-tags={post.data.tags.join(',')}
-          >
-            {variant === 'featured' && effectiveCover && (
+    {carouselSlides.length > 0 && (
+      <section class="carousel" aria-label="Browse by category" aria-roledescription="carousel">
+        <div class="carousel-track" aria-live="off">
+          {carouselSlides.map((slide, i) => (
+            <div class="carousel-slide" data-tag={slide.tag} aria-hidden={i > 0 ? 'true' : 'false'}>
               <img
-                src={effectiveCover}
-                alt=""
-                loading="eager"
-                fetchpriority="high"
+                src={slide.image}
+                alt={`${slide.tag} category`}
+                loading={i === 0 ? 'eager' : 'lazy'}
                 width="1440"
-                height="600"
+                height="540"
               />
-            )}
-            {variant === 'standard' && effectiveCover && (
-              <img
-                src={effectiveCover}
-                alt=""
-                loading="lazy"
-                width="800"
-                height="450"
-              />
-            )}
-            <div class={variant === 'featured' ? 'post-card__overlay' : 'post-card__body'}>
-              <time datetime={post.data.pubDate.toISOString()}>
-                {post.data.pubDate.toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </time>
-              <h2>
-                <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
-              </h2>
-              {post.data.tags.length > 0 && (
-                <div class="tag-list">
-                  {post.data.tags.map((tag) => (
-                    <span class="tag-badge">{tag}</span>
-                  ))}
-                </div>
-              )}
-              <p>{post.data.description}</p>
+              <div class="carousel-caption">
+                <p class="carousel-tagline">{slide.tagline}</p>
+              </div>
             </div>
-          </article>
+          ))}
+        </div>
+        <div class="carousel-dots js-only" role="tablist" aria-label="Carousel navigation"></div>
+      </section>
+    )}
+
+    <div id="article-filter">
+      <nav class="filter-bar js-only" aria-label="Filter articles by tag">
+        <button class="filter-btn" data-filter="all" aria-pressed="true">All</button>
+        {TAG_VALUES.map((tag) => (
+          <button class="filter-btn" data-filter={tag} aria-pressed="false">{tag}</button>
         ))}
-      </div>
-      <p class="empty filter-empty" aria-live="polite" hidden>No articles match this filter.</p>
-    </section>
+      </nav>
+
+      <section aria-label="Articles" id="article-list">
+        {posts.length === 0 && (
+          <p class="empty">No articles yet. Check back soon.</p>
+        )}
+        <div class="article-grid">
+          {postsWithVariants.map(({ post, variant, effectiveCover }) => (
+            <article
+              class={`post-card post-card--${variant}`}
+              data-tags={post.data.tags.join(',')}
+            >
+              {variant === 'featured' && effectiveCover && (
+                <img
+                  src={effectiveCover}
+                  alt=""
+                  loading="eager"
+                  fetchpriority="high"
+                  width="1440"
+                  height="600"
+                />
+              )}
+              {variant === 'standard' && effectiveCover && (
+                <img
+                  src={effectiveCover}
+                  alt=""
+                  loading="lazy"
+                  width="800"
+                  height="450"
+                />
+              )}
+              <div class={variant === 'featured' ? 'post-card__overlay' : 'post-card__body'}>
+                <time datetime={post.data.pubDate.toISOString()}>
+                  {post.data.pubDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </time>
+                <h2>
+                  <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+                </h2>
+                {post.data.tags.length > 0 && (
+                  <div class="tag-list">
+                    {post.data.tags.map((tag) => (
+                      <span class="tag-badge">{tag}</span>
+                    ))}
+                  </div>
+                )}
+                <p>{post.data.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+        <p class="empty filter-empty" aria-live="polite" hidden>No articles match this filter.</p>
+      </section>
+    </div>
   </div>
 </BaseLayout>
 
@@ -321,4 +346,71 @@ const postsWithVariants = posts.map((post, index) => {
       applyFilter(btn.dataset.filter ?? 'all');
     });
   });
+</script>
+
+<script>
+  const track = document.querySelector<HTMLElement>('.carousel-track');
+  const slides = document.querySelectorAll<HTMLElement>('.carousel-slide');
+  const dotsContainer = document.querySelector<HTMLElement>('.carousel-dots');
+
+  if (track && slides.length > 0 && dotsContainer) {
+    const total = slides.length;
+    let current = 0;
+    let intervalId: number = 0;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.setAttribute('role', 'tab');
+      dot.setAttribute('aria-label', `Slide ${i + 1} of ${total}`);
+      dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = Array.from(dotsContainer.querySelectorAll<HTMLButtonElement>('button'));
+
+    function goToSlide(n: number) {
+      if (!track) return;
+      current = n;
+      track.style.transform = `translateX(-${n * 100}%)`;
+      slides.forEach((slide, i) => {
+        slide.setAttribute('aria-hidden', i === n ? 'false' : 'true');
+      });
+      dots.forEach((dot, i) => {
+        dot.setAttribute('aria-selected', i === n ? 'true' : 'false');
+      });
+    }
+
+    function startInterval() {
+      intervalId = window.setInterval(() => {
+        goToSlide((current + 1) % total);
+      }, 5000);
+    }
+
+    if (total > 1) {
+      startInterval();
+
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          clearInterval(intervalId);
+          goToSlide(i);
+          startInterval();
+        });
+      });
+    }
+
+    slides.forEach((slide, i) => {
+      slide.addEventListener('click', () => {
+        clearInterval(intervalId);
+        goToSlide(i);
+        const filterTarget = document.getElementById('article-filter');
+        if (filterTarget) filterTarget.scrollIntoView({ behavior: 'smooth' });
+        const tag = slide.dataset.tag;
+        if (tag) {
+          const btn = document.querySelector<HTMLButtonElement>(`.filter-btn[data-filter="${tag}"]`);
+          if (btn) btn.click();
+        }
+        if (total > 1) startInterval();
+      });
+    });
+  }
 </script>

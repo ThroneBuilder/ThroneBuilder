@@ -205,3 +205,89 @@ a:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
+
+/* ============================================================
+   Carousel (auto-rotating category slideshow)
+   ============================================================ */
+.carousel {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  position: relative;
+  cursor: pointer;
+}
+
+.carousel-slide img {
+  width: 100%;
+  aspect-ratio: 16 / 6;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.65));
+  color: #fff;
+}
+
+.carousel-tagline {
+  font-family: var(--font-display);
+  font-size: var(--font-size-2xl);
+  margin: 0;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+}
+
+.carousel-dots button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--color-accent);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.carousel-dots button[aria-selected="true"] {
+  background: var(--color-accent);
+}
+
+.carousel-dots button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* No-JS fallback: horizontal scroll strip */
+html:not(.js) .carousel {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+}
+
+html:not(.js) .carousel-track {
+  transform: none !important;
+  transition: none;
+}
+
+html:not(.js) .carousel-slide {
+  flex: 0 0 80vw;
+  scroll-snap-align: start;
+}
