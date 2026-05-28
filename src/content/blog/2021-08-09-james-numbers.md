@@ -2,6 +2,7 @@
 title: "James Numbers"
 pubDate: 2021-08-09
 description: "A quick summary of my unconventional master's thesis"
+tags: ["career"]
 ---
 
 *Written August 9, 2021. Minor edits December 13, 2023. Reposted April 1, 2026.*

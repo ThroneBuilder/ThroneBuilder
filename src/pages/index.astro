@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL, TAG_VALUES } from '../consts';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
@@ -18,12 +18,22 @@ const posts = (await getCollection('blog')).sort(
       <p class="tagline">{SITE_DESCRIPTION}</p>
     </header>
 
-    <section aria-label="Articles">
+    <nav class="filter-bar js-only" aria-label="Filter articles by tag">
+      <button class="filter-btn" data-filter="all" aria-pressed="true">All</button>
+      {TAG_VALUES.map((tag) => (
+        <button class="filter-btn" data-filter={tag} aria-pressed="false">{tag}</button>
+      ))}
+    </nav>
+
+    <section aria-label="Articles" id="article-list">
       {posts.length === 0 && (
         <p class="empty">No articles yet. Check back soon.</p>
       )}
       {posts.map((post) => (
-        <article class="post-card">
+        <article
+          class="post-card"
+          data-tags={post.data.tags.join(',')}
+        >
           <h2>
             <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
           </h2>
@@ -34,9 +44,17 @@ const posts = (await getCollection('blog')).sort(
               day: 'numeric',
             })}
           </time>
+          {post.data.tags.length > 0 && (
+            <div class="tag-list">
+              {post.data.tags.map((tag) => (
+                <span class="tag-badge">{tag}</span>
+              ))}
+            </div>
+          )}
           <p>{post.data.description}</p>
         </article>
       ))}
+      <p class="empty filter-empty" aria-live="polite" hidden>No articles match this filter.</p>
     </section>
   </div>
 </BaseLayout>
@@ -100,8 +118,46 @@ const posts = (await getCollection('blog')).sort(
     margin-bottom: var(--spacing-2);
   }
 
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-1);
+    margin: var(--spacing-1) 0 var(--spacing-2);
+  }
+
   .empty {
     color: var(--color-muted);
     padding: var(--spacing-8) 0;
   }
 </style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const articles = document.querySelectorAll<HTMLElement>('#article-list article');
+  const emptyMsg = document.querySelector<HTMLElement>('.filter-empty');
+
+  function applyFilter(filter: string) {
+    let visible = 0;
+
+    articles.forEach((article) => {
+      const tags = article.dataset.tags ? article.dataset.tags.split(',') : [];
+      const show = filter === 'all' || tags.includes(filter);
+      article.hidden = !show;
+      if (show) visible++;
+    });
+
+    buttons.forEach((btn) => {
+      btn.setAttribute('aria-pressed', btn.dataset.filter === filter ? 'true' : 'false');
+    });
+
+    if (emptyMsg) {
+      emptyMsg.hidden = visible > 0;
+    }
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      applyFilter(btn.dataset.filter ?? 'all');
+    });
+  });
+</script>
