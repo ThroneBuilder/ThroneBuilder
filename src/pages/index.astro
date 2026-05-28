@@ -13,9 +13,18 @@ function ytThumbnail(url: string | undefined): string | undefined {
   return m ? `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg` : undefined;
 }
 
+function firstBodyImage(body: string): string | undefined {
+  // Skip data: URIs; grab first external https:// img src
+  const m = body.match(/<img[^>]+src=["'](https:\/\/[^"']+)["']/);
+  return m?.[1];
+}
+
 type Variant = 'featured' | 'standard' | 'text';
 const postsWithVariants = posts.map((post, index) => {
-  const effectiveCover = post.data.coverImage ?? ytThumbnail(post.data.youtubeUrl);
+  const effectiveCover =
+    post.data.coverImage ??
+    ytThumbnail(post.data.youtubeUrl) ??
+    firstBodyImage(post.body);
   const variant: Variant = index === 0 && effectiveCover
     ? 'featured'
     : effectiveCover
