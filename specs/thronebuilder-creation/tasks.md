@@ -138,11 +138,11 @@ redirects to the other.
 **Purpose**: Quality gates that span all user stories. Run after all four stories
 are independently verified.
 
-- [ ] T024 [P] Run Lighthouse audit on the live Render URL or `npm run preview` — target all four scores ≥ 90 (Performance, Accessibility, Best Practices, SEO) on both desktop and mobile; fix any failures before marking complete
-- [ ] T025 [P] WCAG 2.1 AA review: verify body text color contrast ≥ 4.5:1, all `<img>` tags have non-empty descriptive `alt` attributes, heading hierarchy is sequential (no skipped levels), keyboard focus indicators are visible on all interactive elements
-- [ ] T028 [P] Cross-browser and mobile testing (SC-003): open the homepage and one article page in Chrome, Firefox, and Safari; verify layout and content render correctly on both desktop and a mobile viewport (375 px wide); record any visual regressions
-- [ ] T026 Run final clean build: `npm run build`; confirm zero errors and zero warnings in the build output
-- [ ] T027 [P] Update `specs/thronebuilder-creation/checklists/requirements.md` — mark all success criteria (SC-001 through SC-007) as verified with observed evidence (e.g., Lighthouse scores, validator results)
+- [x] T024 [P] Run Lighthouse audit on the live Render URL or `npm run preview` — target all four scores ≥ 90 (Performance, Accessibility, Best Practices, SEO) on both desktop and mobile; fix any failures before marking complete
+- [x] T025 [P] WCAG 2.1 AA review: verify body text color contrast ≥ 4.5:1, all `<img>` tags have non-empty descriptive `alt` attributes, heading hierarchy is sequential (no skipped levels), keyboard focus indicators are visible on all interactive elements
+- [x] T028 [P] Cross-browser and mobile testing (SC-003): open the homepage and one article page in Chrome, Firefox, and Safari; verify layout and content render correctly on both desktop and a mobile viewport (375 px wide); record any visual regressions
+- [x] T026 Run final clean build: `npm run build`; confirm zero errors and zero warnings in the build output
+- [x] T027 [P] Update `specs/thronebuilder-creation/checklists/requirements.md` — mark all success criteria (SC-001 through SC-007) as verified with observed evidence (e.g., Lighthouse scores, validator results)
 
 ---
 
