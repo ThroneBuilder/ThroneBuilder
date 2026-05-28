@@ -3,6 +3,7 @@ title: "Welcome to ThroneBuilder"
 pubDate: 2026-05-27
 description: "This website is an experiment in AI coding and personal branding"
 tags: ["career"]
+coverImage: "/images/opensource.jpg"
 ---
 
 

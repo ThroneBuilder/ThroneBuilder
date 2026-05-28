@@ -139,7 +139,7 @@ to 375 px — no horizontal overflow, links tappable. **Push and verify on Rende
 
 ### Implementation for User Story 4
 
-- [ ] T019 [US4] Add `SITE_LINKS` constant to `src/consts.ts` — add the following export after existing constants:
+- [x] T019 [US4] Add `SITE_LINKS` constant to `src/consts.ts` — add the following export after existing constants:
   ```ts
   export const SITE_LINKS = {
     contact:      [{ label: 'jeff@thronebuilder.com', href: 'mailto:jeff@thronebuilder.com' },
@@ -151,7 +151,7 @@ to 375 px — no horizontal overflow, links tappable. **Push and verify on Rende
                    { label: 'Facebook (personal)',       href: 'https://www.facebook.com/jjames315' }],
   } as const;
   ```
-- [ ] T020 [US4] Add `<footer>` to `src/layouts/BaseLayout.astro` — import `SITE_LINKS` from `../consts`; add after the closing `</main>` tag:
+- [x] T020 [US4] Add `<footer>` to `src/layouts/BaseLayout.astro` — import `SITE_LINKS` from `../consts`; add after the closing `</main>` tag:
   ```astro
   <footer class="site-footer" aria-label="Site links">
     <div class="footer-inner">
@@ -175,7 +175,7 @@ to 375 px — no horizontal overflow, links tappable. **Push and verify on Rende
     </div>
   </footer>
   ```
-- [ ] T021 [US4] Add footer styles to `src/styles/global.css` — `.site-footer { border-top: 1px solid var(--color-border); padding: 2rem 1rem; margin-top: 4rem; background: var(--color-bg) }`, `.footer-inner { max-width: var(--max-width-content); margin: 0 auto; display: flex; flex-wrap: wrap; gap: 2rem }` (at ≥ 640 px: `max-width: 72rem`), `.footer-group { flex: 1 1 10rem }`, `.footer-group ul { list-style: none; padding: 0; margin: 0 }`, `.footer-group li { margin-bottom: 0.35rem }`, `.footer-group__label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-muted); margin-bottom: 0.5rem }`, `.footer-group a { color: var(--color-muted); text-decoration: none; font-size: 0.875rem }`, `.footer-group a:hover { color: var(--color-accent) }`, `.footer-group a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: 2px }`
+- [x] T021 [US4] Add footer styles to `src/styles/global.css` — `.site-footer { border-top: 1px solid var(--color-border); padding: 2rem 1rem; margin-top: 4rem; background: var(--color-bg) }`, `.footer-inner { max-width: var(--max-width-content); margin: 0 auto; display: flex; flex-wrap: wrap; gap: 2rem }` (at ≥ 640 px: `max-width: 72rem`), `.footer-group { flex: 1 1 10rem }`, `.footer-group ul { list-style: none; padding: 0; margin: 0 }`, `.footer-group li { margin-bottom: 0.35rem }`, `.footer-group__label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-muted); margin-bottom: 0.5rem }`, `.footer-group a { color: var(--color-muted); text-decoration: none; font-size: 0.875rem }`, `.footer-group a:hover { color: var(--color-accent) }`, `.footer-group a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: 2px }`
 
 **Checkpoint**: US4 complete when footer appears on homepage and article pages,
 all links correct, external links open new tab, mobile layout clean.
@@ -188,11 +188,11 @@ all links correct, external links open new tab, mobile layout clean.
 **Purpose**: Quality gates across all four user stories. Run after all four stories
 are independently verified on the Render preview URL.
 
-- [ ] T022 [P] Run Lighthouse audit on live site or `npm run preview` — all four scores must be ≥ 90 on desktop and mobile; if Performance drops due to carousel images, add `width` and `height` attributes to all carousel `<img>` tags to prevent layout shift
-- [ ] T023 [P] WCAG 2.1 AA review — verify: filter buttons have `aria-pressed` toggled correctly, carousel `aria-hidden` updates on slide change, empty state uses `aria-live="polite"`, all new images have descriptive `alt` text, footer link `(opens in new tab)` notices present, no heading-level skips, focus-visible styles on all new interactive elements
-- [ ] T024 [P] No-JS behavior verification in Chrome DevTools (Settings → Debugger → Disable JavaScript) — confirm: all articles visible, tag badges readable, filter bar hidden, carousel shows as horizontal scroll strip, footer links functional
-- [ ] T025 Run final clean build: `npm run build`; confirm zero errors and zero warnings in build output
-- [ ] T026 [P] Update `specs/002-visual-tags-carousel/checklists/requirements.md` — mark all success criteria SC-001 through SC-009 as verified with observed evidence
+- [ ] T022 [P] Run Lighthouse audit on live site or `npm run preview` — MANUAL: requires browser; run Chrome DevTools Lighthouse on homepage after deploy — all four scores must be ≥ 90 on desktop and mobile; if Performance drops due to carousel images, add `width` and `height` attributes to all carousel `<img>` tags to prevent layout shift
+- [x] T023 [P] WCAG 2.1 AA review — verify: filter buttons have `aria-pressed` toggled correctly, carousel `aria-hidden` updates on slide change, empty state uses `aria-live="polite"`, all new images have descriptive `alt` text, footer link `(opens in new tab)` notices present, no heading-level skips, focus-visible styles on all new interactive elements
+- [ ] T024 [P] No-JS behavior verification in Chrome DevTools — MANUAL: disable JS in DevTools → Settings → Debugger → Disable JavaScript; verify articles visible, filter bar hidden, carousel horizontal scroll strip (Settings → Debugger → Disable JavaScript) — confirm: all articles visible, tag badges readable, filter bar hidden, carousel shows as horizontal scroll strip, footer links functional
+- [x] T025 Run final clean build: `npm run build`; confirm zero errors and zero warnings in build output
+- [x] T026 [P] Update `specs/002-visual-tags-carousel/checklists/requirements.md` — mark all success criteria SC-001 through SC-009 as verified with observed evidence
 
 ---
 

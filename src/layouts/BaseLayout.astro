@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE_TITLE, SITE_URL, DEFAULT_OG_IMAGE } from '../consts';
+import { SITE_TITLE, SITE_URL, DEFAULT_OG_IMAGE, SITE_LINKS } from '../consts';
 
 interface Props {
   title: string;
@@ -64,5 +64,26 @@ const resolvedOgImage = ogImage.startsWith('http')
     <main id="main-content">
       <slot />
     </main>
+    <footer class="site-footer" aria-label="Site links">
+      <div class="footer-inner">
+        {Object.entries(SITE_LINKS).map(([group, links]) => (
+          <section class="footer-group">
+            <h3 class="footer-group__label">{group}</h3>
+            <ul>
+              {(links as readonly { readonly label: string; readonly href: string }[]).map(link => (
+                <li>
+                  {link.href.startsWith('mailto:')
+                    ? <a href={link.href}>{link.label}</a>
+                    : <a href={link.href} target="_blank" rel="noopener noreferrer">
+                        {link.label}<span class="sr-only"> (opens in new tab)</span>
+                      </a>
+                  }
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </footer>
   </body>
 </html>
