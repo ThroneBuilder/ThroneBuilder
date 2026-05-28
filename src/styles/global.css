@@ -4,12 +4,13 @@
 :root {
   /* Colors — WCAG AA: text on bg = 7.5:1, accent on bg = 4.6:1 */
   --color-text: #1a1a2e;
-  --color-bg: #f8f8f2;
+  --color-bg: #ffffff;
   --color-accent: #b84a00;
   --color-muted: #595959;
   --color-border: #d1d5db;
 
   /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
   --font-size-lg: 1.125rem;
@@ -43,6 +44,10 @@
 * {
   margin: 0;
   padding: 0;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 html {
