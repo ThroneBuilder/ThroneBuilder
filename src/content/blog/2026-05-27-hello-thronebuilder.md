@@ -2,7 +2,7 @@
 title: "Welcome to ThroneBuilder"
 pubDate: 2026-05-27
 description: "This website is an experiment in AI coding and personal branding"
-tags: ["career"]
+tags: ["career","coding"]
 coverImage: "/images/opensource.jpg"
 ---
 
@@ -14,3 +14,6 @@ It has four goals:
 2. Explore website design patterns and technologies
 3. Consolidate my content across many sources
 4. Encourage me to write more
+
+Source code is here:
+https://github.com/ThroneBuilder/ThroneBuilder
