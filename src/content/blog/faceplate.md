@@ -6,12 +6,10 @@ tags: ["legos","coding"]
 coverImage: "/images/Faceplate.png"
 ---
 
-Faceplate.me combines my passions of coding and Legos to automate and crowdsource the creation of the Hall of Faces.
-
-If you got here from https://faceplate.me, that's because I haven't deployed it yet.
+[Faceplate.me](https://faceplate.me/) combines my passions of coding and Legos to automate and crowdsource the creation of the Hall of Faces.
 
 Source: https://github.com/ThroneBuilder/Faceplate
-Vision: https://github.com/ThroneBuilder/Faceplate/blob/001-lego-mosaic-core/docs/vision.md
+Vision: https://github.com/ThroneBuilder/Faceplate/blob/master/docs/vision.md
 
 
 Functional Uses
