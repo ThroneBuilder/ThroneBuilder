@@ -6,9 +6,27 @@ tags: ["legos","coding"]
 coverImage: "/images/Faceplate.png"
 ---
 
-Source code: https://github.com/ThroneBuilder/Faceplate
-
 Faceplate.me combines my passions of coding and Legos to automate and crowdsource the creation of the Hall of Faces.
+
+If you got here from https://faceplate.me, that's because I haven't deployed it yet.
+
+Source: https://github.com/ThroneBuilder/Faceplate
+Vision: https://github.com/ThroneBuilder/Faceplate/blob/001-lego-mosaic-core/docs/vision.md
+
+
+Functional Uses
+1. Generate my future faceplates with this
+2. Invite friends to submit for me
+3. Cite at BrickCon for self-serve faceplates
+4. Use ahead of appearances to gather faces for Hall of Faces exhibition
+5. Build community with BrickCon, BrickLink, Studio and the rest of the Lego community
+
+Coding Uses
+1. Add to my portfolio at github.com/ThroneBuilder
+2. Refine how I use SpecKit on larger projects
+3. Assess how to handle image algorithms
+4. Discover APIs and file formats for Lego ecosystem
+
 
 <img src='/images/Hall of Faces.JPEG'>
 
