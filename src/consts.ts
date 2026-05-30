@@ -1,4 +1,4 @@
-export const TAG_VALUES = ['family', 'friends', 'career', 'alomac', 'legos', 'coding'] as const;
+export const TAG_VALUES = ['family', 'friends', 'coding', 'legos', 'alomac', 'career'] as const;
 export type Tag = typeof TAG_VALUES[number];
 
 export const SITE_TITLE = 'Throne Builder';
