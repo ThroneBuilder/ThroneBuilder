@@ -8,7 +8,7 @@ coverImage: "/images/Faceplate.png"
 
 [Faceplate.me](https://faceplate.me/) combines my passions of coding and Legos to automate and crowdsource the creation of the Hall of Faces.
 
-Live site is at 1A, step 1 of 10:
+Live site implementation is at step 1 of 10:
 1. bare-bones workflow
 2. camera capture + back buttons
 3. manual face crop/trim
