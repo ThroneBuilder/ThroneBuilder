@@ -8,17 +8,16 @@ coverImage: "/images/Faceplate.png"
 
 [Faceplate.me](https://faceplate.me/) combines my passions of coding and Legos to automate and crowdsource the creation of the Hall of Faces.
 
-Live site implementation is at step 1 of 10:
-1. bare-bones workflow
-2. camera capture + back buttons
-3. manual face crop/trim
-4. backing plate generator
-5. multi-photo candidates
-6. candidate iteration
-7. export/save
-8. telemetry
-9. project galleries
-10. BrickLink/Studio integration
+Live site has implemented these features:
+1. Basic workflow from upload through mosaic algorithm
+2. Camera capture and in-place manual crop
+
+Working on these features:
+3. Automatically generate candidates to iterate brightness + contrast settings
+4. Export/save to BrickLink & Studio formats
+5. Project collections to crowdsource & share
+6. Telemetry on usage and site usability
+
 
 Source: https://github.com/ThroneBuilder/Faceplate
 Vision: https://github.com/ThroneBuilder/Faceplate/blob/master/docs/vision.md
