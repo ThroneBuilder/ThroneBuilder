@@ -87,23 +87,28 @@ const postsWithVariants = posts.map((post, index) => {
               data-tags={post.data.tags.join(',')}
             >
               {variant === 'featured' && effectiveCover && (
-                <img
-                  src={effectiveCover}
-                  alt=""
-                  loading="eager"
-                  fetchpriority="high"
-                  width="1440"
-                  height="600"
-                />
+                <>
+                  <img
+                    src={effectiveCover}
+                    alt=""
+                    loading="eager"
+                    fetchpriority="high"
+                    width="1440"
+                    height="600"
+                  />
+                  <a href={`/blog/${post.slug}/`} class="post-card__cover-link" tabindex="-1" aria-hidden="true"></a>
+                </>
               )}
               {variant === 'standard' && effectiveCover && (
-                <img
-                  src={effectiveCover}
-                  alt=""
-                  loading="lazy"
-                  width="800"
-                  height="450"
-                />
+                <a href={`/blog/${post.slug}/`} tabindex="-1" aria-hidden="true">
+                  <img
+                    src={effectiveCover}
+                    alt=""
+                    loading="lazy"
+                    width="800"
+                    height="450"
+                  />
+                </a>
               )}
               <div class={variant === 'featured' ? 'post-card__overlay' : 'post-card__body'}>
                 <time datetime={post.data.pubDate.toISOString()}>
@@ -182,6 +187,11 @@ const postsWithVariants = posts.map((post, index) => {
     display: block;
   }
 
+  .post-card__cover-link {
+    position: absolute;
+    inset: 0;
+  }
+
   .post-card__overlay {
     position: absolute;
     bottom: 0;
@@ -190,6 +200,12 @@ const postsWithVariants = posts.map((post, index) => {
     padding: 2rem;
     background: linear-gradient(transparent, rgba(0, 0, 0, 0.72));
     color: #fff;
+    pointer-events: none;
+  }
+
+  .post-card__overlay a {
+    pointer-events: auto;
+    position: relative;
   }
 
   .post-card__overlay time {
