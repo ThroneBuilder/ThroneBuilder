@@ -11,12 +11,14 @@ coverImage: "/images/Faceplate.png"
 Live site has implemented these features:
 1. Basic workflow from upload through mosaic algorithm
 2. Camera capture and in-place manual crop
-
-Working on these features:
 3. Automatically generate candidates to iterate brightness + contrast settings
-4. Export/save to BrickLink & Studio formats
+
+Still working on these features:
+4. Export/save to CSV, LDraw, BrickLink & Studio formats
 5. Project collections to crowdsource & share
-6. Telemetry on usage and site usability
+6. Image help with tilting, cropping
+7. Auto & manual baseplate masking to non-rectangle shape
+8. Telemetry on usage and site usability
 
 
 Source: https://github.com/ThroneBuilder/Faceplate
